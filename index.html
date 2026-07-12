@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lisa — Action Plan | TheTypedTarot</title>
+<style>
+:root {
+  --bg: #F5F0EB;
+  --panel: #EDE7D9;
+  --panel-2: #E3DFD0;
+  --tx: #463C32;
+  --tx-strong: #2C2621;
+  --tx-soft: #7C7060;
+  --acc: #C28A46;
+  --acc-tx: #96682B;
+  --grn: #5B6655;
+  --sage: #8C9A83;
+  --gold: #B59A68;
+  --cedar: #6A5848;
+  --line: rgba(106, 88, 72, .28);
+  --line-strong: rgba(106, 88, 72, .55);
+  --shadow: rgba(44, 38, 33, .14);
+  --tape: rgba(181, 154, 104, .38);
+  --stain: rgba(106, 88, 72, .07);
+  --serif: 'Palatino Linotype', Palatino, Georgia, serif;
+  --typed: 'Courier New', Courier, monospace;
+  --body: 'Palatino Linotype', Palatino, Georgia, serif;
+  color-scheme: light only;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--tx);
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 60% 40% at 0% 0%, var(--stain), transparent 70%),
+    radial-gradient(ellipse 50% 35% at 100% 100%, var(--stain), transparent 70%);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none;
+  opacity: .5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.08'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 60px 26px 80px;
+}
+
+/* Header */
+.page-header {
+  text-align: center;
+  margin-bottom: 52px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--line);
+}
+.page-header .eyebrow {
+  font-family: var(--typed);
+  font-size: .72rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--acc-tx);
+  margin-bottom: 14px;
+}
+.page-header h1 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 600;
+  color: var(--tx-strong);
+  line-height: 1.15;
+  letter-spacing: .02em;
+  text-wrap: balance;
+  margin-bottom: 10px;
+}
+.page-header .date {
+  font-family: var(--typed);
+  font-size: .78rem;
+  letter-spacing: .14em;
+  color: var(--tx-soft);
+}
+
+/* Diamond Rule */
+.rule {
+  display: flex; align-items: center; gap: 16px;
+  color: var(--acc-tx); font-size: .85rem;
+  margin: 44px auto;
+  max-width: 260px;
+}
+.rule::before, .rule::after {
+  content: ""; flex: 1; height: 1px; background: var(--line-strong);
+}
+
+/* Section */
+.section {
+  margin-bottom: 48px;
+}
+.section-head {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 22px;
+}
+.section-head .label {
+  font-family: var(--typed);
+  font-size: .72rem;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--acc-tx);
+  white-space: nowrap;
+}
+.section-head::after {
+  content: ""; flex: 1; height: 1px; background: var(--line-strong);
+}
+
+/* Frame card */
+.frame {
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  box-shadow:
+    inset 0 0 0 5px var(--panel),
+    inset 0 0 0 6px var(--line),
+    4px 6px 18px var(--shadow);
+  padding: 36px clamp(22px, 4vw, 44px);
+  margin-bottom: 24px;
+  border-radius: 2px;
+}
+
+/* Asset table */
+.asset-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .92rem;
+}
+.asset-table td {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.asset-table tr:last-child td { border-bottom: none; }
+.asset-table td:first-child {
+  font-family: var(--typed);
+  font-size: .78rem;
+  letter-spacing: .08em;
+  color: var(--tx-strong);
+  width: 180px;
+  padding-right: 16px;
+}
+.asset-table a {
+  color: var(--acc-tx);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.asset-table a:hover { color: var(--acc); }
+.asset-table .pending {
+  font-style: italic;
+  color: var(--tx-soft);
+}
+
+/* Checklist */
+.checks {
+  list-style: none;
+  display: grid;
+  gap: 14px;
+}
+.checks li {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  font-size: .95rem;
+  line-height: 1.65;
+  color: var(--tx);
+}
+.checks li strong {
+  color: var(--tx-strong);
+}
+.checks .sub {
+  margin-top: 6px;
+  font-size: .88rem;
+  color: var(--tx-soft);
+  line-height: 1.6;
+}
+
+/* Custom checkbox */
+.check-box {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 2px;
+  background: var(--panel);
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+  transition: background .12s ease, border-color .12s ease;
+}
+.check-box:checked {
+  background: var(--acc);
+  border-color: var(--acc);
+}
+.check-box:checked::after {
+  content: "\2713";
+  position: absolute;
+  top: -1px; left: 2px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #26201A;
+}
+.check-box:focus-visible {
+  outline: 2px dashed var(--acc-tx);
+  outline-offset: 3px;
+}
+.checks label {
+  cursor: pointer;
+  flex: 1;
+}
+.check-box:checked + label strong {
+  text-decoration: line-through;
+  color: var(--tx-soft);
+}
+.check-box:checked + label .sub {
+  text-decoration: line-through;
+  opacity: .5;
+}
+
+/* Typed index cards (pillars) */
+.pillar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+.pillar-grid .tcard {
+  flex: 0 1 calc(33.333% - 14px);
+  min-width: 200px;
+}
+.tcard {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--acc);
+  box-shadow: 2px 4px 12px var(--shadow);
+  padding: 24px 20px;
+  border-radius: 2px;
+}
+.tcard:nth-child(odd) { transform: rotate(-.4deg); }
+.tcard:nth-child(even) { transform: rotate(.35deg); }
+.tcard h4 {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--tx-strong);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.tcard p {
+  font-size: .85rem;
+  color: var(--tx-soft);
+  line-height: 1.6;
+}
+.tcard.sage { border-top-color: var(--sage); }
+.tcard.moss { border-top-color: var(--grn); }
+.tcard.gold { border-top-color: var(--gold); }
+
+/* Taped scrap (freebie callout) */
+.scrap {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: 3px 5px 14px var(--shadow);
+  transform: rotate(-.8deg);
+  padding: 34px 28px 28px;
+  margin: 32px auto;
+  max-width: 600px;
+  border-radius: 2px;
+}
+.scrap::before {
+  content: "";
+  position: absolute; top: -12px; left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 96px; height: 24px;
+  background: var(--tape);
+  border-radius: 1px;
+}
+.scrap h3 {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--tx-strong);
+  margin-bottom: 6px;
+}
+.scrap .tagline {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--tx-soft);
+  margin-bottom: 14px;
+}
+.scrap .results {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+.scrap .results li {
+  font-size: .88rem;
+  line-height: 1.55;
+  color: var(--tx);
+  padding-left: 20px;
+  position: relative;
+}
+.scrap .results li::before {
+  content: "\2726";
+  position: absolute;
+  left: 0;
+  color: var(--acc);
+  font-size: .7rem;
+  top: 3px;
+}
+.scrap .promise {
+  margin-top: 16px;
+  font-style: italic;
+  font-size: .9rem;
+  color: var(--grn);
+  border-left: 2px solid var(--sage);
+  padding-left: 14px;
+}
+
+/* Pricing chips */
+.pricing-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+  margin-top: 16px;
+}
+.price-chip {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 22px 20px;
+  text-align: center;
+  border-radius: 2px;
+}
+.price-chip .offer-name {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--tx-strong);
+  margin-bottom: 4px;
+}
+.price-chip .subtitle {
+  font-family: var(--typed);
+  font-size: .68rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--tx-soft);
+  margin-bottom: 10px;
+}
+.price-chip .price {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--acc-tx);
+}
+.price-chip .duration {
+  font-size: .82rem;
+  color: var(--tx-soft);
+  margin-top: 4px;
+}
+
+/* Notes */
+.notes {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  font-size: .88rem;
+  color: var(--tx-soft);
+  line-height: 1.6;
+}
+.notes li {
+  padding-left: 18px;
+  position: relative;
+}
+.notes li::before {
+  content: "\2014";
+  position: absolute;
+  left: 0;
+  color: var(--line-strong);
+}
+
+/* Later section */
+.later {
+  background: var(--panel-2);
+  border: 1px dashed var(--line);
+  padding: 24px 24px;
+  border-radius: 2px;
+  margin-top: 20px;
+}
+.later h4 {
+  font-family: var(--typed);
+  font-size: .72rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--tx-soft);
+  margin-bottom: 12px;
+}
+.later ul {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+.later ul li {
+  font-size: .88rem;
+  color: var(--tx-soft);
+  line-height: 1.55;
+  padding-left: 18px;
+  position: relative;
+}
+.later ul li::before {
+  content: "\25C7";
+  position: absolute;
+  left: 0;
+  color: var(--sage);
+  font-size: .7rem;
+  top: 2px;
+}
+
+@media (max-width: 820px) {
+  .wrap { padding: 40px 20px 60px; }
+  .pillar-grid .tcard { flex: 0 1 100%; }
+  .tcard:nth-child(odd), .tcard:nth-child(even) { transform: none; }
+  .scrap { transform: none; }
+  .asset-table td:first-child { width: 130px; font-size: .72rem; }
+  .pricing-row { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .check-box { transition: none; }
+  .tcard { transform: none !important; }
+  .scrap { transform: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="page-header">
+    <div class="eyebrow">TheTypedTarot</div>
+    <h1>Your Action Plan</h1>
+    <div class="date">Session: July 11, 2026</div>
+  </header>
+
+  <!-- REPLAY & ASSETS -->
+  <section class="section">
+    <div class="section-head">
+      <span class="label">Replay &amp; Assets</span>
+    </div>
+    <div class="frame">
+      <table class="asset-table">
+        <tr>
+          <td>Replay Video</td>
+          <td><a href="https://www.youtube.com/watch?v=FKfIQ_ivWzs" target="_blank" rel="noopener">Watch on YouTube</a></td>
+        </tr>
+        <tr>
+          <td>Design File</td>
+          <td><a href="https://drive.google.com/file/d/18XiIizl93hVIt_bctb7RsmDL0Ssp2ito/view?usp=sharing" target="_blank" rel="noopener">Download from Google Drive</a><br><span class="pending">Install this as a skill in Claude</span></td>
+        </tr>
+        <tr>
+          <td>Quiz Download</td>
+          <td><a href="https://drive.google.com/file/d/1TRgyffCZpBziDbLDH81ibzCcgVFJekjH/view?usp=sharing" target="_blank" rel="noopener">Download from Google Drive</a></td>
+        </tr>
+        <tr>
+          <td>Website File</td>
+          <td><span class="pending">Coming soon &mdash; will be delivered separately</span></td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <div class="rule" aria-hidden="true">&#10022;</div>
+
+  <!-- IMMEDIATE NEXT STEPS -->
+  <section class="section">
+    <div class="section-head">
+      <span class="label">Immediate Next Steps</span>
+    </div>
+    <ul class="checks">
+      <li>
+        <input type="checkbox" class="check-box" id="step1">
+        <label for="step1">
+          <strong>Install the design skill in Claude</strong>
+          <div class="sub">From the Google Drive link above. This ensures everything you build with AI matches your brand.</div>
+        </label>
+      </li>
+      <li>
+        <input type="checkbox" class="check-box" id="step2">
+        <label for="step2">
+          <strong>Set up session payment &amp; booking</strong>
+          <div class="sub">Through Google Workspace scheduling. Set up both sessions with pricing (see below). Label as &ldquo;introductory offer / limited time&rdquo; for launch.</div>
+        </label>
+      </li>
+      <li>
+        <input type="checkbox" class="check-box" id="step3">
+        <label for="step3">
+          <strong>Fix domain issue</strong>
+          <div class="sub">Contact Google Workspace support about the extra letter in your domain. Should resolve Monday.</div>
+        </label>
+      </li>
+      <li>
+        <input type="checkbox" class="check-box" id="step4">
+        <label for="step4">
+          <strong>Add booking link to website and quiz</strong>
+          <div class="sub">Once your domain + scheduling is live, drop the link into your site and into the quiz CTA button.</div>
+        </label>
+      </li>
+      <li>
+        <input type="checkbox" class="check-box" id="step5">
+        <label for="step5">
+          <strong>Start posting social media content</strong>
+          <div class="sub">I&rsquo;ll be sending you 10 posts (your bonus) in the coming days. Start with those.</div>
+        </label>
+      </li>
+    </ul>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section">
+    <div class="section-head">
+      <span class="label">Session Pricing</span>
+    </div>
+    <div class="pricing-row">
+      <div class="price-chip">
+        <div class="offer-name">Discover: The Map</div>
+        <div class="subtitle">Enneagram Typing</div>
+        <div class="price">$45</div>
+        <div class="duration">45 minutes</div>
+      </div>
+      <div class="price-chip">
+        <div class="offer-name">Develop: The Mirror</div>
+        <div class="subtitle">Signature Session</div>
+        <div class="price">$60</div>
+        <div class="duration">60 minutes</div>
+      </div>
+      <div class="price-chip">
+        <div class="offer-name">8-Week Coaching</div>
+        <div class="subtitle">Coming Soon</div>
+        <div class="price">TBD</div>
+        <div class="duration">Beta first</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule" aria-hidden="true">&#10022;</div>
+
+  <!-- CONTENT PILLARS -->
+  <section class="section">
+    <div class="section-head">
+      <span class="label">Content Pillars</span>
+    </div>
+    <p style="font-size:.9rem; color:var(--tx-soft); margin-bottom:8px; max-width:60ch;">Your five launch pillars. Promotional content lives underneath these &mdash; not as a separate category.</p>
+    <div class="pillar-grid">
+      <div class="tcard">
+        <h4>Recognize Your Pattern</h4>
+        <p>Triggers, blind spots, the automatic override. Help people see the mechanism that keeps them stuck.</p>
+      </div>
+      <div class="tcard sage">
+        <h4>Tarot Through the Nine Types</h4>
+        <p>Card interpretations filtered by Enneagram number. Split into groups of 4&ndash;5 types per video.</p>
+      </div>
+      <div class="tcard moss">
+        <h4>Relationships &amp; Communication</h4>
+        <p>High demand, very shareable. How each type asks for reassurance, handles conflict, needs to feel seen.</p>
+      </div>
+      <div class="tcard gold">
+        <h4>From Insight to Integration</h4>
+        <p>What to do after a reading or Enneagram discovery. Journaling prompts, grounding practices, embodiment.</p>
+      </div>
+      <div class="tcard">
+        <h4>TheTypedTarot Education</h4>
+        <p>Why tarot + Enneagram together, why quiz typing is often wrong, behind-the-scenes of a session, what tarot reveals that assessments miss.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FREEBIE -->
+  <section class="section">
+    <div class="section-head">
+      <span class="label">Your Freebie</span>
+    </div>
+    <div class="scrap">
+      <h3>Discover Your Self-Trust Language</h3>
+      <div class="tagline">Find the key that helps you hear your inner knowing and move forward with greater confidence.</div>
+      <ul class="results">
+        <li><strong>Inner Clarity</strong> &mdash; quiet space to hear what you genuinely think</li>
+        <li><strong>Embodied Knowing</strong> &mdash; physical cues: expansion, tension, relief, calm</li>
+        <li><strong>Personal Evidence</strong> &mdash; remembering times your instincts were already accurate</li>
+        <li><strong>Values Alignment</strong> &mdash; decisions that clearly reflect what matters most</li>
+        <li><strong>Supported Reflection</strong> &mdash; thoughtful questions without someone taking the decision away</li>
+      </ul>
+      <div class="promise">You already have a trustworthy inner voice. Here&rsquo;s your clearest way to reconnect with it.</div>
+    </div>
+    <p style="font-size:.88rem; color:var(--tx-soft); margin-top:16px; max-width:58ch; text-align:center; margin-left:auto; margin-right:auto;">This quiz reveals the doorway &mdash; then creates the natural next question that leads to booking a session with you.</p>
+  </section>
+
+  <div class="rule" aria-hidden="true">&#10022;</div>
+
+  <!-- CONTENT SETUP -->
+  <section class="section">
+    <div class="section-head">
+      <span class="label">Content Setup</span>
+    </div>
+    <ul class="checks">
+      <li>
+        <input type="checkbox" class="check-box" id="step6">
+        <label for="step6">
+          <strong>Refine your ideal client avatar</strong>
+          <div class="sub">Read through the &ldquo;Self-Aware Overthinker&rdquo; profile. Remove anything you don&rsquo;t want showing up in your copy. Save it into every AI tool with memory.</div>
+        </label>
+      </li>
+      <li>
+        <input type="checkbox" class="check-box" id="step7">
+        <label for="step7">
+          <strong>Hashtag strategy</strong>
+          <div class="sub">Tag specific Enneagram numbers in every post. Same way astrology content tags zodiac signs &mdash; this is how type-aware people find you.</div>
+        </label>
+      </li>
+      <li>
+        <input type="checkbox" class="check-box" id="step8">
+        <label for="step8">
+          <strong>Research your top types</strong>
+          <div class="sub">Check your coaches network for stats on which Enneagram types are most common in your target demo. Focus more content on those numbers.</div>
+        </label>
+      </li>
+      <li>
+        <input type="checkbox" class="check-box" id="step9">
+        <label for="step9">
+          <strong>Launch your arcana series</strong>
+          <div class="sub">Your major arcana + Enneagram types and minor arcana + Enneagram types series is ready &mdash; start next week.</div>
+        </label>
+      </li>
+    </ul>
+  </section>
+
+  <!-- LATER -->
+  <section class="section">
+    <div class="later">
+      <h4>On the Horizon (Not Yet)</h4>
+      <ul>
+        <li><strong>8-week coaching program</strong> &mdash; still developing. Reach out when ready to build out and update the website.</li>
+        <li><strong>Beta test the program</strong> &mdash; go cheap or free with ideal clients (not friends/family) for real feedback + testimonials.</li>
+        <li><strong>Link signature session to top of website</strong> &mdash; once domain is sorted, that&rsquo;s the primary sales function.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="rule" aria-hidden="true">&#10022;</div>
+
+  <!-- NOTES -->
+  <section class="section">
+    <div class="section-head">
+      <span class="label">Remember</span>
+    </div>
+    <ul class="notes">
+      <li>You&rsquo;re not teaching tarot &mdash; you&rsquo;re using it as a tool. Content should never position you as a tarot educator.</li>
+      <li>Less than half of quiz-typed people get their Enneagram type right. That&rsquo;s a key selling point for your typing session.</li>
+      <li>Your website doesn&rsquo;t need a separate sales page &mdash; sessions are already right there in the structure.</li>
+      <li>Your freebie results should feel like accessible pathways, not another personality type to research.</li>
+    </ul>
+  </section>
+
+  <div style="text-align:center; margin-top:40px; padding-top:30px; border-top:1px solid var(--line);">
+    <p style="font-family:var(--typed); font-size:.72rem; letter-spacing:.22em; text-transform:uppercase; color:var(--tx-soft);">Questions? Reach out anytime.</p>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var KEY = 'ttt-action-plan-checks';
+  var boxes = document.querySelectorAll('.check-box');
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) {}
+
+  boxes.forEach(function(box) {
+    if (saved[box.id]) box.checked = true;
+    box.addEventListener('change', function() {
+      saved[box.id] = box.checked;
+      localStorage.setItem(KEY, JSON.stringify(saved));
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

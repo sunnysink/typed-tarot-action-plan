@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lisa — Your Content System | TheTypedTarot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F5F0EB;
+  --panel: #EDE7D9;
+  --panel-2: #E3DFD0;
+  --tx: #463C32;
+  --tx-strong: #2C2621;
+  --tx-soft: #7C7060;
+  --acc: #C28A46;
+  --acc-tx: #96682B;
+  --grn: #5B6655;
+  --sage: #8C9A83;
+  --gold: #B59A68;
+  --cedar: #6A5848;
+  --line: rgba(106, 88, 72, .28);
+  --line-strong: rgba(106, 88, 72, .55);
+  --shadow: rgba(44, 38, 33, .14);
+  --tape: rgba(181, 154, 104, .38);
+  --stain: rgba(106, 88, 72, .07);
+  --btn-tx: #26201A;
+  --serif: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
+  --typed: 'Special Elite', 'Courier New', monospace;
+  --body: 'Lora', 'Palatino Linotype', Palatino, Georgia, serif;
+  color-scheme: light only;
+}
+:root[data-theme="dark"], :root[data-theme="light"] { color-scheme: light only; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--tx);
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 60% 40% at 0% 0%, var(--stain), transparent 70%),
+    radial-gradient(ellipse 50% 35% at 100% 100%, var(--stain), transparent 70%);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none;
+  opacity: .5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.08'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.wrap { position: relative; max-width: 900px; margin: 0 auto; padding: 60px 26px 100px; z-index: 1; }
+
+.head { text-align: center; margin-bottom: 40px; }
+.head .eyebrow {
+  font-family: var(--typed); font-size: .78rem;
+  letter-spacing: .28em; text-transform: uppercase;
+  color: var(--acc-tx); margin-bottom: 18px;
+}
+.head h1 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  line-height: 1.08; color: var(--tx-strong);
+  letter-spacing: .02em; margin-bottom: 14px;
+  text-wrap: balance;
+}
+.head .sub {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+  color: var(--tx-soft); font-weight: 500;
+  letter-spacing: .02em;
+}
+.head .dateline {
+  font-family: var(--typed); font-size: .72rem;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--tx-soft); margin-top: 20px;
+}
+
+.rule {
+  display: flex; align-items: center; gap: 16px;
+  color: var(--acc-tx); font-size: 1rem;
+  margin: 40px auto; max-width: 340px;
+  justify-content: center;
+}
+.rule::before, .rule::after {
+  content: ""; flex: 1; height: 1px; background: var(--line-strong);
+}
+
+.welcome {
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  box-shadow:
+    inset 0 0 0 5px var(--panel),
+    inset 0 0 0 6px var(--line),
+    4px 6px 18px var(--shadow);
+  padding: 42px clamp(24px, 5vw, 52px);
+  margin: 20px 0 50px;
+}
+.welcome p {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+  line-height: 1.55; color: var(--tx-strong);
+  font-weight: 500; text-wrap: pretty;
+  max-width: 40ch; margin: 0 auto;
+  text-align: center;
+}
+.welcome p + p { margin-top: 16px; }
+
+.priority {
+  background: linear-gradient(135deg, rgba(194,138,70,.12), rgba(181,154,104,.06));
+  border: 1px solid var(--acc);
+  border-radius: 2px;
+  padding: 24px 28px;
+  margin: 30px 0;
+  position: relative;
+}
+.priority::before {
+  content: "";
+  position: absolute; top: -1px; left: 0; right: 0;
+  height: 3px; background: var(--acc);
+}
+.priority .label {
+  font-family: var(--typed); font-size: .72rem;
+  letter-spacing: .28em; text-transform: uppercase;
+  color: var(--acc-tx); margin-bottom: 10px;
+}
+.priority h3 {
+  font-family: var(--serif); font-size: 1.5rem;
+  color: var(--tx-strong); font-weight: 600;
+  margin-bottom: 8px;
+}
+.priority p { color: var(--tx); font-size: 1rem; }
+
+section { margin: 60px 0; }
+.eyebrow-row {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 12px;
+}
+.eyebrow-row::after {
+  content: ""; flex: 1; height: 1px; background: var(--line-strong);
+}
+.type-label {
+  font-family: var(--typed); font-size: .78rem;
+  letter-spacing: .28em; text-transform: uppercase;
+  color: var(--acc-tx);
+}
+h2 {
+  font-family: var(--serif); font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 600; color: var(--tx-strong);
+  line-height: 1.12; letter-spacing: .015em;
+  margin-bottom: 8px; text-wrap: balance;
+}
+.section-note {
+  color: var(--tx-soft); font-size: .95rem;
+  font-style: italic; margin-bottom: 26px;
+  max-width: 60ch;
+}
+h3 {
+  font-family: var(--serif); font-size: 1.4rem;
+  font-weight: 600; color: var(--tx-strong);
+  margin: 32px 0 14px;
+}
+p { max-width: 64ch; margin-bottom: 16px; }
+p:last-child { margin-bottom: 0; }
+a {
+  color: var(--acc-tx);
+  text-decoration: underline;
+  text-decoration-color: var(--acc);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color .12s ease;
+}
+a:hover { color: var(--tx-strong); }
+
+.resources {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+.res {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--acc);
+  box-shadow: 2px 4px 12px var(--shadow);
+  padding: 22px 20px;
+  border-radius: 2px;
+  display: flex; flex-direction: column;
+  gap: 8px;
+}
+.res:nth-child(odd) { transform: rotate(-.4deg); }
+.res:nth-child(even) { transform: rotate(.35deg); }
+.res .rlabel {
+  font-family: var(--typed); font-size: .68rem;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--acc-tx);
+}
+.res .rname {
+  font-family: var(--serif); font-size: 1.15rem;
+  font-weight: 600; color: var(--tx-strong);
+  line-height: 1.25;
+}
+.res .rdesc {
+  font-size: .88rem; color: var(--tx-soft);
+  line-height: 1.55; margin-top: 4px;
+}
+.res .rlink {
+  font-family: var(--typed); font-size: .75rem;
+  letter-spacing: .1em;
+  margin-top: auto; padding-top: 12px;
+}
+
+.steps { list-style: none; counter-reset: step; padding: 0; margin-top: 20px; }
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 18px 20px 18px 64px;
+  margin-bottom: 12px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  box-shadow: 1px 2px 8px var(--shadow);
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 18px; top: 18px;
+  font-family: var(--typed);
+  font-size: 1rem;
+  width: 32px; height: 32px;
+  background: var(--acc); color: var(--btn-tx);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+}
+.steps li strong {
+  font-family: var(--serif); font-size: 1.15rem;
+  color: var(--tx-strong); display: block;
+  margin-bottom: 6px; font-weight: 600;
+}
+.steps li p { margin-bottom: 0; }
+.steps li a { font-family: var(--body); }
+
+.checks { list-style: none; padding: 0; display: grid; gap: 14px; margin-top: 16px; }
+.checks li {
+  display: flex; gap: 14px; align-items: flex-start;
+  font-family: var(--body);
+  font-size: 1rem; line-height: 1.6; color: var(--tx);
+  padding-left: 4px;
+}
+.checks li::before {
+  content: "✓"; color: var(--acc-tx); flex: 0 0 auto;
+  font-family: var(--typed); font-size: 1rem;
+  margin-top: 2px;
+}
+
+.plan-table {
+  width: 100%; border-collapse: collapse;
+  margin-top: 20px;
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 3px 4px 14px var(--shadow);
+}
+.plan-table th, .plan-table td {
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  font-size: .95rem;
+}
+.plan-table th {
+  font-family: var(--typed);
+  font-size: .78rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--acc-tx);
+  background: var(--panel-2);
+  font-weight: 400;
+}
+.plan-table td:first-child {
+  font-family: var(--serif);
+  font-weight: 600;
+  color: var(--tx-strong);
+  font-size: 1.05rem;
+}
+.plan-table td:nth-child(2) {
+  font-family: var(--typed);
+  color: var(--acc-tx);
+  white-space: nowrap;
+}
+.plan-table tr:last-child td { border-bottom: none; }
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+  margin-top: 24px;
+}
+.pillar {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--acc);
+  box-shadow: 2px 4px 12px var(--shadow);
+  padding: 26px 24px;
+  border-radius: 2px;
+}
+.pillar.grn { border-top-color: var(--grn); }
+.pillar.sage { border-top-color: var(--sage); }
+.pillar.gold { border-top-color: var(--gold); }
+.pillar h4 {
+  font-family: var(--serif); font-size: 1.25rem;
+  color: var(--tx-strong); font-weight: 600;
+  margin-bottom: 6px; line-height: 1.2;
+}
+.pillar .pmeta {
+  font-family: var(--typed); font-size: .68rem;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--acc-tx); margin-bottom: 14px;
+}
+.pillar ol {
+  padding-left: 20px;
+  color: var(--tx);
+  font-size: .95rem;
+  line-height: 1.55;
+}
+.pillar ol li { margin-bottom: 8px; }
+.pillar ol li:last-child { margin-bottom: 0; }
+
+.pull {
+  background: var(--panel);
+  border-left: 3px solid var(--acc);
+  padding: 20px 24px;
+  margin: 24px 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--tx-strong);
+  line-height: 1.5;
+  box-shadow: 2px 3px 10px var(--shadow);
+}
+
+.frame {
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  box-shadow:
+    inset 0 0 0 5px var(--panel),
+    inset 0 0 0 6px var(--line),
+    4px 6px 18px var(--shadow);
+  padding: 32px clamp(22px, 4vw, 44px);
+  margin: 24px 0;
+}
+.frame h3 { margin-top: 0; }
+.frame p { max-width: none; }
+
+.chip-row {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-top: 16px;
+}
+.chip {
+  font-family: var(--typed);
+  font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+  border: 1px solid var(--line-strong); color: var(--tx-strong);
+  padding: 8px 14px 6px; border-radius: 2px;
+  background: var(--panel);
+}
+
+.callout {
+  background: linear-gradient(135deg, rgba(91,102,85,.10), rgba(140,154,131,.04));
+  border-left: 3px solid var(--grn);
+  padding: 20px 24px;
+  margin: 24px 0;
+  border-radius: 2px;
+}
+.callout .cl-label {
+  font-family: var(--typed); font-size: .7rem;
+  letter-spacing: .24em; text-transform: uppercase;
+  color: var(--grn); margin-bottom: 8px;
+}
+.callout p { color: var(--tx); }
+
+.video-slot {
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  box-shadow:
+    inset 0 0 0 5px var(--panel),
+    inset 0 0 0 6px var(--line),
+    4px 6px 18px var(--shadow);
+  border-radius: 2px;
+  padding: 22px;
+  margin: 24px 0;
+}
+.video-slot .vlabel {
+  font-family: var(--typed);
+  font-size: .78rem;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--acc-tx);
+  margin-bottom: 14px;
+  text-align: center;
+}
+.video-frame {
+  position: relative;
+  padding-bottom: 62.5%;
+  height: 0;
+  overflow: hidden;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+}
+.video-frame iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: 0;
+}
+
+footer {
+  margin-top: 80px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+footer .sig {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--tx-strong);
+  margin-bottom: 10px;
+}
+footer .mark {
+  font-family: var(--typed);
+  font-size: .7rem;
+  letter-spacing: .32em;
+  color: var(--tx-soft);
+}
+
+@media (max-width: 720px) {
+  .wrap { padding: 40px 20px 70px; }
+  section { margin: 44px 0; }
+  .res:nth-child(odd), .res:nth-child(even) { transform: none; }
+  .plan-table th, .plan-table td { padding: 10px 12px; font-size: .88rem; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <div class="eyebrow">Forge Session · Delivery Document</div>
+    <h1>Lisa, here's your content system</h1>
+    <div class="sub">Everything from our sessions — in one place, ready to use</div>
+    <div class="dateline">Prepared July 22, 2026 · Sunny Sink</div>
+  </div>
+
+  <div class="rule" aria-hidden="true">✦</div>
+
+  <div class="welcome">
+    <p>You walked in with a full life and a full-time job, and you walked out with a system that runs at the pace of a real human being.</p>
+    <p>This is that system. Read through it in your own time, and come back to it whenever you need to remember what we built.</p>
+  </div>
+
+  <section>
+    <div class="priority">
+      <div class="label">Start Here</div>
+      <h3>Watch the batch-creation video first</h3>
+      <p>Before anything else, watch the short video I recorded showing you exactly how to use the Weekly Batch Builder. Everything below will make more sense once you've seen it in motion.</p>
+    </div>
+
+    <div class="video-slot">
+      <div class="vlabel">▶ Batch Builder Walkthrough</div>
+      <div class="video-frame">
+        <iframe src="https://www.loom.com/embed/9ba52e7bce13437ba478befae5fe8e1c" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen title="Batch Builder Walkthrough"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow-row"><span class="type-label">Your Toolkit</span></div>
+    <h2>Assets &amp; resources</h2>
+    <p class="section-note">Everything you have access to now. Bookmark this page so you always have the links.</p>
+
+    <div class="resources">
+      <div class="res">
+        <span class="rlabel">Session 1 Replay</span>
+        <span class="rname">First session recording</span>
+        <span class="rdesc">Where we mapped your ideal client, method, and freebie strategy.</span>
+        <a class="rlink" href="https://www.youtube.com/watch?v=FKfIQ_ivWzs" target="_blank" rel="noopener">Watch on YouTube →</a>
+      </div>
+
+      <div class="res">
+        <span class="rlabel">Session 2 Replay</span>
+        <span class="rname">Today's session recording</span>
+        <span class="rdesc">Where we generated your topics and built your Batch Builder.</span>
+        <a class="rlink" href="https://www.youtube.com/watch?v=bLY3Mk__3wA" target="_blank" rel="noopener">Watch on YouTube →</a>
+      </div>
+
+      <div class="res">
+        <span class="rlabel">Interactive Tool</span>
+        <span class="rname">Weekly Batch Builder</span>
+        <span class="rdesc">Fill in the form each week to generate a ready-to-use brief for Claude. Your topics are pre-loaded.</span>
+        <a class="rlink" href="https://sunnysink.github.io/typed-tarot-content-builder/" target="_blank" rel="noopener">Open the Builder →</a>
+      </div>
+
+      <div class="res">
+        <span class="rlabel">Your Bonus Posts</span>
+        <span class="rname">Content Kit</span>
+        <span class="rdesc">Your 12 bonus posts from Session 1, plus 10 more coming this week in a second tab.</span>
+        <a class="rlink" href="https://sunnysink.github.io/typed-tarot-content-kit/" target="_blank" rel="noopener">Open the Kit →</a>
+      </div>
+
+      <div class="res">
+        <span class="rlabel">Example Output</span>
+        <span class="rname">Batch 0 — sample batch</span>
+        <span class="rdesc">A completed example so you can see what a finished batch looks like before you run your first one.</span>
+        <a class="rlink" href="https://docs.google.com/document/d/1jkp_1FqfPaRxFcIayn9RliY-MLiG4fUxgJeMP2RLLSk/edit?usp=sharing" target="_blank" rel="noopener">Google Doc →</a>
+      </div>
+
+      <div class="res">
+        <span class="rlabel">Claude Skill</span>
+        <span class="rname">TheTypedTarot Design Skill</span>
+        <span class="rdesc">Already installed. Claude uses this to keep your visual style consistent in any artifact.</span>
+        <a class="rlink" href="https://drive.google.com/file/d/18XiIizl93hVIt_bctb7RsmDL0Ssp2ito/view?usp=sharing" target="_blank" rel="noopener">Google Drive →</a>
+      </div>
+
+      <div class="res">
+        <span class="rlabel">Claude Skill</span>
+        <span class="rname">ChatGPT Image Prompt Skill</span>
+        <span class="rdesc">Install in Claude so it always outputs image prompts in your exact format — no re-explaining.</span>
+        <a class="rlink" href="https://drive.google.com/file/d/1ldQjBmhjNWhqxSW7WI3wGxtFbwXyh1BV/view?usp=sharing" target="_blank" rel="noopener">Google Drive →</a>
+      </div>
+
+      <div class="res">
+        <span class="rlabel">Lead Magnet</span>
+        <span class="rname">Self-Trust Language Quiz</span>
+        <span class="rdesc">Your freebie — an HTML quiz that hosts on your site. Leads to the typing session.</span>
+        <a class="rlink" href="https://drive.google.com/file/d/1TRgyffCZpBziDbLDH81ibzCcgVFJekjH/view?usp=sharing" target="_blank" rel="noopener">Google Drive →</a>
+      </div>
+
+      <div class="res">
+        <span class="rlabel">Reference</span>
+        <span class="rname">Ideal Client Profile</span>
+        <span class="rdesc">The Self-Aware Overthinker — full profile with readiness signals and language patterns.</span>
+        <a class="rlink" href="https://docs.google.com/document/d/1TS4yie1QRK9bseBdmOASB0guThRoea7-IZo0QnJ1gIM/edit?usp=sharing" target="_blank" rel="noopener">Google Doc →</a>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="cl-label">Skill Installation Note</div>
+      <p>To install a Claude skill, download the <strong>.skill</strong> file to your computer (don't let Google Drive unzip it — click Download, not Open). Then in the Claude desktop app: <strong>+ menu → Skills → Upload skill</strong>, and select the file. If you get stuck, message me and we'll troubleshoot.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow-row"><span class="type-label">Do These First</span></div>
+    <h2>Immediate next steps</h2>
+    <p class="section-note">In order. The first two make everything else easier.</p>
+
+    <ol class="steps">
+      <li>
+        <strong>Watch the batch-creation video</strong>
+        <p>See the Weekly Batch Builder in action so you know exactly how to fill it in. Everything else assumes you've seen this.</p>
+      </li>
+      <li>
+        <strong>Install the ChatGPT Image Prompt Skill in Claude</strong>
+        <p>Download from Google Drive, then upload to Claude desktop. This means every batch Claude generates will include image prompts formatted correctly for ChatGPT — no re-explaining, ever.</p>
+      </li>
+      <li>
+        <strong>Start posting Batch 1</strong>
+        <p>You already have 12 posts. Schedule them at 3 per week. That gives you a month of runway while you build the next batch.</p>
+      </li>
+      <li>
+        <strong>Run your first batch through the Batch Builder</strong>
+        <p>Open the tool, pick a topic from the dropdown, fill in the offer info, generate the brief. Paste the brief into Claude. That's your week.</p>
+      </li>
+      <li>
+        <strong>Start capturing insights on Loom</strong>
+        <p>When an idea or session moment hits, record a quick Loom about it. Transcribe it, drop the text into a folder on your computer (or in Claude Code once it's set up). These become your best content source — much richer than picking random topics.</p>
+      </li>
+      <li>
+        <strong>Set up Claude Code when you're ready</strong>
+        <p>You have Pro access. When you're ready, tell Claude: "I have these insights. I'd love for you to store them so we can set up a workflow for social media." Build the folder system from the beginning so you don't have to migrate later.</p>
+      </li>
+      <li>
+        <strong>Think about launch bonuses</strong>
+        <p>You already have the 8-page type reports as a first-session bonus — that's gold. Consider adding: first-time discounts, limited-time offers ("first 5 bookings"), dollars-off for booking within a certain window. Limited-time framing gets people off the fence.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="eyebrow-row"><span class="type-label">Your Rhythm</span></div>
+    <h2>Weekly posting plan</h2>
+    <p class="section-note">What we agreed on. Doable inside your real schedule.</p>
+
+    <table class="plan-table">
+      <thead>
+        <tr><th>Platform</th><th>Volume</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Instagram / TikTok videos</td>
+          <td>3 per week</td>
+          <td>Short-form. Don't read a script — use bullet points.</td>
+        </tr>
+        <tr>
+          <td>Facebook / Instagram posts</td>
+          <td>3–4 per week</td>
+          <td>Mix of single images and carousels.</td>
+        </tr>
+        <tr>
+          <td>Blog (Substack)</td>
+          <td>1 per week</td>
+          <td>Longer-form. Your natural writing home.</td>
+        </tr>
+        <tr>
+          <td>Substack Notes</td>
+          <td>Daily</td>
+          <td>Easy to batch and schedule ahead.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull">
+      Primary promotion: the typing session ($45) to start. Until enough people know their type, the deeper session doesn't quite make sense yet.
+    </div>
+
+    <div class="callout">
+      <div class="cl-label">A Rule Worth Repeating</div>
+      <p>You are <strong>not teaching tarot</strong>. You're using tarot as a tool inside your method. Content should never position you as a tarot educator or offer tarot how-to. Lead with the transformation — self-trust, the override pattern, the moment the answer arrives — and name The Pattern Beneath Method as much as you can. The method is what's unique to you.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow-row"><span class="type-label">Your Content Foundation</span></div>
+    <h2>Your five content pillars</h2>
+    <p class="section-note">All your topics live in the Weekly Batch Builder, sorted by pillar. These are the lenses everything else runs through.</p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pmeta">Pillar One</div>
+        <h4>Recognize Your Pattern</h4>
+        <p>Triggers, blind spots, the automatic override. Help people see the mechanism that keeps them stuck.</p>
+      </div>
+
+      <div class="pillar grn">
+        <div class="pmeta">Pillar Two</div>
+        <h4>Tarot Through the Nine Types</h4>
+        <p>Card interpretations filtered by Enneagram number. Split into groups of 4–5 types per video.</p>
+      </div>
+
+      <div class="pillar sage">
+        <div class="pmeta">Pillar Three</div>
+        <h4>Relationships &amp; Communication</h4>
+        <p>High demand, very shareable. How each type asks for reassurance, handles conflict, needs to feel seen.</p>
+      </div>
+
+      <div class="pillar gold">
+        <div class="pmeta">Pillar Four</div>
+        <h4>From Insight to Integration</h4>
+        <p>What to do after a reading or Enneagram discovery. Journaling prompts, grounding practices, embodiment.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pmeta">Pillar Five</div>
+        <h4>TheTypedTarot Education</h4>
+        <p>Why tarot + Enneagram together, why quiz typing is often wrong, behind-the-scenes of a session, what tarot reveals that assessments miss.</p>
+      </div>
+    </div>
+
+    <div class="pull">
+      Topics need to be simple enough that you can glance at the list and pick one without decoding. If a topic feels confusing to you, it'll feel confusing to your audience too.
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow-row"><span class="type-label">Still Open</span></div>
+    <h2>Loose ends from Session 1</h2>
+    <p class="section-note">The setup pieces we identified last time that still need doing.</p>
+
+    <ul class="checks">
+      <li><strong>Refine your ideal client avatar</strong> — read the Self-Aware Overthinker profile, remove anything that doesn't fit, save the refined version into every AI tool with memory.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="eyebrow-row"><span class="type-label">Later, When Ready</span></div>
+    <h2>Content setup roadmap</h2>
+    <p class="section-note">Not for this week. Save for when the weekly rhythm is running smoothly.</p>
+
+    <ul class="checks">
+      <li><strong>Hashtag strategy</strong> — tag specific Enneagram numbers in every post to attract type-aware audiences (same way astrology content tags signs).</li>
+      <li><strong>Research which types dominate your ideal client</strong> — check coaches network for stats on most common types among your target demo (introspective women 30s–40s; likely heavy on 4s and 9s).</li>
+      <li><strong>8-week coaching program build-out</strong> — reach out when ready to design and update the website.</li>
+      <li><strong>Beta test the coaching program</strong> — go cheap or free with ideal clients (not friends and family) for feedback and testimonials. Iterate before full-price launch.</li>
+      <li><strong>Link signature session to top of website</strong> once domain is sorted — that's the primary sales function.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="eyebrow-row"><span class="type-label">Your Foundation</span></div>
+    <h2>Ideal Client &amp; Freebie Strategy</h2>
+    <p class="section-note">Copy the language from here into your posts, emails, and About page. It's already dialed in.</p>
+
+    <div class="frame">
+      <h3>The Self-Aware Overthinker</h3>
+      <p>Introspective woman who has done the work — therapy, books, assessments, journaling — and can explain exactly why she behaves the way she does. But when it's time to decide, set a boundary, or admit what she wants, that self-awareness stops translating into action. She already knows her answer. She just distrusts it the moment it arrives.</p>
+      <p>Her real struggle isn't finding the answer. It's trusting herself enough to act on what she already knows.</p>
+
+      <h3>Readiness signals (her exact words)</h3>
+      <div class="chip-row">
+        <span class="chip">"I know what I want, so why can't I choose it?"</span>
+        <span class="chip">"I've analyzed this from every angle and I'm still in the same place."</span>
+        <span class="chip">"I don't need another explanation. I need to trust myself."</span>
+      </div>
+
+      <h3>What she needs from you</h3>
+      <p>A space to hear herself clearly, plus evidence that her inner knowing is reliable. Enneagram gives language for the mechanism of self-abandonment. Tarot slows the moment enough for her own response to emerge before the override takes control.</p>
+    </div>
+
+    <h3>Your freebie: Discover Your Self-Trust Language</h3>
+    <p><em>Tagline:</em> Find the key that helps you hear your inner knowing and move forward with greater confidence.</p>
+    <p>Five results — Inner Clarity, Embodied Knowing, Personal Evidence, Values Alignment, Supported Reflection. Each reveals a doorway back to the reader's own knowing without diagnosing her as a fixed personality type. The natural next question becomes: "I know how my self-trust speaks, so why do I keep overriding it?" — which leads to booking the typing session.</p>
+  </section>
+
+  <section>
+    <div class="eyebrow-row"><span class="type-label">Pricing</span></div>
+    <h2>Session pricing summary</h2>
+
+    <table class="plan-table">
+      <thead>
+        <tr><th>Offer</th><th>Duration</th><th>Price</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Enneagram Typing — "Discover the Map"</td><td>45 min</td><td>$45 introductory</td></tr>
+        <tr><td>Signature Session — "The Mirror"</td><td>1 hr</td><td>$60 introductory</td></tr>
+        <tr><td>8-Week Coaching Program</td><td>TBD</td><td>TBD (beta first)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="rule" aria-hidden="true">✦</div>
+
+  <footer>
+    <div class="sig">Anything you need — you know where to find me.</div>
+    <div class="mark">— SUNNY</div>
+  </footer>
+
+</div>
+</body>
+</html>
